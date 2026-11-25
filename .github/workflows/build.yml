@@ -1,0 +1,72 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Han template
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build template bundle
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: han-iA-Writer-template
+          path: han.iatemplate.zip
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: han-iA-Writer-template
+
+      - name: Publish continuous release
+        if: github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          name: Continuous build
+          tag: continuous
+          body: |
+            Automatically built from commit ${{ github.sha }}.
+
+            - Bundle: han.iatemplate.zip
+            - Fonts: LXGW WenKai GB and Maple Mono CN
+          artifacts: han.iatemplate.zip
+          prerelease: true
+          makeLatest: false
+          allowUpdates: true
+          replacesArtifacts: true
+
+      - name: Publish tagged release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: ncipollo/release-action@v1
+        with:
+          name: Han ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
+          artifacts: han.iatemplate.zip
+          generateReleaseNotes: true
+          allowUpdates: true
+          replacesArtifacts: true

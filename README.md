@@ -9,3 +9,16 @@
 
 
 `./build.sh` 或从 release 页面下载。将生成的 `han.iatemplate` 倒入 iA Writer，在预览中选中 han 模板。
+
+## 自动构建与发布
+
+每次推送 `main` 分支时，GitHub Actions 都会自动构建 `han.iatemplate.zip`，并更新 GitHub Releases 页面上的 **Continuous build** 预发布版本。
+
+要发布正式版本，推送一个 `v` 开头的 tag，例如：
+
+```sh
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+GitHub Actions 会自动创建 `Han v1.0.0`，并把 `han.iatemplate.zip` 附到该 Release 上。

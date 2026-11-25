@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 set -euo pipefail
 
 TEMPLATE_NAME="han"
@@ -10,13 +10,20 @@ if [[ ! -d "${TEMPLATE_BUNDLE}" ]]; then
     exit 1
 fi
 
-plutil -lint "${TEMPLATE_BUNDLE}/Contents/Info.plist"
+python3 - "${TEMPLATE_BUNDLE}/Contents/Info.plist" <<'PY'
+import plistlib
+import sys
+from pathlib import Path
 
-if [[ -f "${TEMPLATE_ZIP}" ]]; then
-    old_zip=$(mktemp -d)
-    mv "${TEMPLATE_ZIP}" "${old_zip}/${TEMPLATE_ZIP}"
-fi
+plist_path = Path(sys.argv[1])
+with plist_path.open("rb") as plist_file:
+    plistlib.load(plist_file)
 
-zip -r -X "${TEMPLATE_ZIP}" "${TEMPLATE_BUNDLE}" >/dev/null
+print(f"Validated {plist_path}")
+PY
+
+rm -f "${TEMPLATE_ZIP}"
+
+zip -r -X -q "${TEMPLATE_ZIP}" "${TEMPLATE_BUNDLE}"
 
 printf 'Built %s\n' "${TEMPLATE_ZIP}"
