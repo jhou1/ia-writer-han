@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>zh-CN</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleIdentifier</key>
+	<string>cn.hjw.iawriter.han</string>
+	<key>CFBundleName</key>
+	<string>Han</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>IATemplateDocumentFile</key>
+	<string>document</string>
+	<key>IATemplateTitleFile</key>
+	<string>title</string>
+	<key>IATemplateHeaderFile</key>
+	<string>header</string>
+	<key>IATemplateFooterFile</key>
+	<string>footer</string>
+	<key>IATemplateHeaderHeight</key>
+	<integer>72</integer>
+	<key>IATemplateFooterHeight</key>
+	<integer>72</integer>
+	<key>IATemplateDescription</key>
+	<string>中英双语排版模板：中文使用霞鹜文楷，西文与代码使用 Maple Mono CN。</string>
+	<key>IATemplateAuthor</key>
+	<string>hjw</string>
+	<key>IATemplateAuthorURL</key>
+	<string>https://github.com/hjw</string>
+	<key>IATemplateTitleUsesHeaderAndFooterHeight</key>
+	<false/>
+	<key>IATemplateSupportsSmartTables</key>
+	<true/>
+	<key>IATemplateSupportsMath</key>
+	<true/>
+</dict>
+</plist>
