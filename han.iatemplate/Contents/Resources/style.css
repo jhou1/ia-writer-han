@@ -41,13 +41,70 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Document page in Preview: centered measure with gutters that grow with the
+   pane width, following iA Writer's built-in templates. Gutters are in px so
+   they don't scale with the iOS content-size setting; max-width is the text
+   measure only (body is content-box), gutters are added on top of it. */
 @media screen {
     body:not(.title):not(.header):not(.footer) {
+        --gutter: 10px;
         max-width: 720px;
         margin-left: auto;
         margin-right: auto;
-        padding-left: 1.5em;
-        padding-right: 1.5em;
+        /* viewport-fit=cover: keep text clear of notches and rounded corners.
+           The plain values are a fallback for engines without env(). */
+        padding-left: var(--gutter);
+        padding-left: calc(var(--gutter) + env(safe-area-inset-left));
+        padding-right: var(--gutter);
+        padding-right: calc(var(--gutter) + env(safe-area-inset-right));
+    }
+}
+
+@media screen and (min-width: 375px) {
+    body:not(.title):not(.header):not(.footer) {
+        --gutter: 18px;
+    }
+}
+
+@media screen and (min-width: 414px) {
+    body:not(.title):not(.header):not(.footer) {
+        --gutter: 20px;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    body:not(.title):not(.header):not(.footer) {
+        --gutter: 32px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    body:not(.title):not(.header):not(.footer) {
+        --gutter: 48px;
+    }
+}
+
+/* iPad */
+@media screen and (min-width: 760px) and (max-device-width: 1024px) {
+    body:not(.title):not(.header):not(.footer) {
+        --gutter: 70px;
+    }
+}
+
+/* macOS Preview (iA Writer sets the "mac" class on <html>) */
+html.mac body:not(.title):not(.header):not(.footer) {
+    --gutter: 24px;
+}
+
+@media screen and (min-width: 480px) {
+    html.mac body:not(.title):not(.header):not(.footer) {
+        --gutter: 48px;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    html.mac body:not(.title):not(.header):not(.footer) {
+        --gutter: 72px;
     }
 }
 
